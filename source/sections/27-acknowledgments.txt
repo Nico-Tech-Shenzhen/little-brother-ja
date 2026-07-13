@@ -1,0 +1,20 @@
+Acknowledgments
+
+This book owes a tremendous debt to many writers, friends, mentors, and heroes who made it possible.
+
+For the hackers and cypherpunks: Bunnie Huang, Seth Schoen, Ed Felten, Alex Halderman, Gweeds, Natalie Jeremijenko, Emmanuel Goldstein, Aaron Swartz
+
+For the heroes: Mitch Kapor, John Gilmore, John Perry Barlow, Larry Lessig, Shari Steele, Cindy Cohn, Fred von Lohmann, Jamie Boyle, George Orwell, Abbie Hoffman, Joe Trippi, Bruce Schneier, Ross Dowson, Harry Kopyto, Tim O'Reilly
+
+For the writers: Bruce Sterling, Kathe Koja, Scott Westerfeld, Justine Larbalestier, Pat York, Annalee Newitz, Dan Gillmor, Daniel Pinkwater, Kevin Pouslen, Wendy Grossman, Jay Lake, Ben Rosenbaum
+
+For the friends: Fiona Romeo, Quinn Norton, Danny O'Brien, Jon Gilbert, danah boyd, Zak Hanna, Emily Hurson, Grad Conn, John Henson, Amanda Foubister, Xeni Jardin, Mark Frauenfelder, David Pescovitz, John Battelle, Karl Levesque, Kate Miles, Neil and Tara-Lee Doctorow, Rael Dornfest, Ken Snider
+
+For the mentors: Judy Merril, Roz and Gord Doctorow, Harriet Wolff, Jim Kelly, Damon Knight, Scott Edelman
+
+Thank you all for giving me the tools to think and write about these ideas.
+
+&&&$
+
+Creative Commons
+
