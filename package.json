@@ -1,0 +1,18 @@
+{
+  "name": "little-brother-ja",
+  "version": "1.0.0",
+  "description": "Japanese translation of Little Brother by Cory Doctorow (CC BY-NC-SA 3.0)",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "split": "python3 scripts/split_source.py",
+    "validate:sections": "python3 scripts/validate_sections.py",
+    "validate:links": "python3 scripts/validate_links.py"
+  },
+  "devDependencies": {
+    "vitepress": "^1.3.4"
+  },
+  "type": "module"
+}

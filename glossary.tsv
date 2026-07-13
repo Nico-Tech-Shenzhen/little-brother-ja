@@ -1,0 +1,66 @@
+source_term	ja_term	note
+hacker	ハッカー	本書の文脈では「探求者」「システムの仕組みを深く理解しようとする人」の意味。クラッカーと混同しないこと
+hacking	ハッキング	探求・創造的改造行為。違法アクセス（クラッキング）とは区別する
+cracker	クラッカー	不正アクセスを行う者。ハッカーとは区別する
+security	セキュリティ	安全性・保護の仕組み
+cryptography	暗号学 / 暗号技術	暗号の理論と実践。「クリプトグラフィー」は使わない
+encryption	暗号化	データを鍵を使って読めない形式に変換すること
+decryption	復号	暗号化されたデータを元に戻すこと
+hash	ハッシュ	データの一方向変換によって得られる固定長の値
+key	鍵	暗号化・復号に使われる秘密の値
+private key	秘密鍵	公開鍵暗号方式で自分だけが持つ鍵
+public key	公開鍵	公開鍵暗号方式で公開する鍵
+AES	AES（Advanced Encryption Standard）	対称鍵暗号標準。初出時に括弧内で正式名称を付記
+RSA	RSA	公開鍵暗号アルゴリズム（Rivest, Shamir, Adleman）。初出時に括弧内で解説
+SHA-1	SHA-1	暗号学的ハッシュ関数。初出時に「安全なハッシュアルゴリズム」と補足可
+TLS	TLS（Transport Layer Security）	通信を暗号化するプロトコル。初出時に括弧内で解説。旧称SSLについても触れること
+SSL	SSL（Secure Sockets Layer）	TLSの旧称。本文に応じてTLS/SSLと記載
+SSH	SSH（Secure Shell）	安全なリモートログインプロトコル。初出時に括弧内で解説
+Tor	Tor	匿名通信ネットワーク。固有名詞のためそのまま使用
+VPN	VPN（Virtual Private Network）	仮想プライベートネットワーク。初出時に括弧内で解説
+RFID	RFID（Radio-Frequency Identification）	電波による非接触識別技術。初出時に括弧内で解説
+GPS	GPS（Global Positioning System）	全地球測位システム。初出時に括弧内で解説
+DHS	DHS（Department of Homeland Security）	国土安全保障省。初出時に正式名称を付記
+PATRIOT Act	愛国者法（PATRIOT Act）	9.11後に制定された米国の広範な監視・捜査権限を与える法律
+civil liberties	市民的自由	言論・集会・プライバシーなどの権利
+privacy	プライバシー	個人情報・私的領域を守る権利
+surveillance	監視	個人または集団の行動を継続的に監視すること
+wiretapping	盗聴	通信を無断で傍受すること
+firewall	ファイアウォール	ネットワークへの不正アクセスを遮断するシステム
+packet	パケット	ネットワーク上を流れるデータの単位
+IP address	IPアドレス	インターネット上の機器を識別する数値アドレス
+MAC address	MACアドレス	ネットワーク機器固有の識別番号
+DNS	DNS（Domain Name System）	ドメイン名をIPアドレスに変換するシステム。初出時に括弧内で解説
+exploit	エクスプロイト	ソフトウェア・システムの脆弱性を利用したコードや技法
+vulnerability	脆弱性	セキュリティ上の弱点
+zero-day	ゼロデイ（脆弱性）	発見・公開された直後の未修正の脆弱性
+social engineering	ソーシャルエンジニアリング	技術的手段ではなく人間の心理を操って情報を得る手法
+phishing	フィッシング	偽サイト・偽メールで個人情報を詐取する攻撃
+man-in-the-middle attack	中間者攻撃	通信経路に割り込んで盗聴・改ざんを行う攻撃
+denial of service	サービス拒否攻撃（DoS攻撃）	大量のリクエストでサービスを停止させる攻撃
+Linux	Linux	オープンソースのOSカーネル。固有名詞のためそのまま使用
+ParanoidLinux	ParanoidLinux	作中の匿名重視Linuxディストリビューション（架空）。そのまま保持
+kernel	カーネル	OSの中核プログラム
+firmware	ファームウェア	ハードウェアに組み込まれたソフトウェア
+open source	オープンソース	ソースコードが公開されているソフトウェア
+free software	フリーソフトウェア	自由に使用・改変・配布できるソフトウェア（「無料」ではなく「自由」）
+ARPAnet	ARPAnet	インターネットの前身となった米国防省のネットワーク。固有名詞のためそのまま
+blog	ブログ	ウェブ上の日記・意見記事形式のサイト
+podcast	ポッドキャスト	インターネット上の音声・映像配信番組
+w1n5t0n	w1n5t0n	マーカスのParanoidLinuxログイン名。原文のleet-speakをそのまま保持
+M1k3y	M1k3y	XnetでのマーカスのハンドルネームであるM1k3y。原文のleet-speakをそのまま保持
+Xnet	Xnet	作中のアンダーグラウンドネットワーク名。そのまま保持
+DarkNet	DarkNet	作中・文脈上のプライベートネットワーク。そのまま保持
+ARG	ARG（Alternate Reality Game）	現実を舞台にした謎解きゲーム。初出時に括弧内で解説
+gait analysis	歩行分析	歩き方のパターンから個人を識別する生体認証技術
+biometrics	生体認証	指紋・虹彩・顔・歩行など身体的特徴による認証
+false positive	誤検知 / 偽陽性	正常なものをセキュリティ上の脅威と誤って判定すること
+false negative	見逃し / 偽陰性	真の脅威を検知できないこと
+Fourth Amendment	合衆国憲法修正第4条	不合理な捜索・逮捕から市民を守る条項。初出時に内容を簡単に補足
+First Amendment	合衆国憲法修正第1条	言論・報道・宗教・集会の自由を保障する条項
+civil disobedience	市民的不服従	不正義な法律や権力に対する非暴力的な抵抗
+EFF	EFF（Electronic Frontier Foundation）	電子フロンティア財団。デジタル市民権を守るNPO。初出時に正式名称を付記
+Electronic Frontier Foundation	電子フロンティア財団（Electronic Frontier Foundation）	デジタル時代の市民権・プライバシーを擁護する米国のNPO
+ACLU	ACLU（American Civil Liberties Union）	米国自由人権協会。初出時に正式名称を付記
+Xbox	Xbox	Microsoftのゲーム機。固有名詞のためそのまま使用
+PlayStation	PlayStation	ソニーのゲーム機。固有名詞のためそのまま使用（プレイステーションも可）

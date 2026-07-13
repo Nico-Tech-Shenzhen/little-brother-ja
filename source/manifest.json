@@ -1,0 +1,45 @@
+{
+  "project": "Little Brother — Japanese Translation",
+  "retrieved": "2026-07-13",
+  "note": "Both files are PARTIAL. The web fetch tool has a ~120-135 KB body cap and the server blocks curl/wget (HTTP 403). Files retrieved cover approximately Chapters 1–3 only. Download the full files manually (see instructions below) and re-run scripts/split_source.py + scripts/validate_sections.py.",
+  "manual_download_instructions": [
+    "1. Download TXT: curl -L -o source/original/Cory_Doctorow_-_Little_Brother.txt http://craphound.com/littlebrother/Cory_Doctorow_-_Little_Brother.txt",
+    "2. Download HTML: curl -L -o source/original/Cory_Doctorow_-_Little_Brother.htm http://craphound.com/littlebrother/Cory_Doctorow_-_Little_Brother.htm",
+    "3. After download, run: python scripts/split_source.py",
+    "4. Then run: python scripts/validate_sections.py",
+    "5. Update the sha256 and size_bytes fields below with actual values from: sha256sum source/original/*"
+  ],
+  "sources": [
+    {
+      "id": "txt",
+      "url": "http://craphound.com/littlebrother/Cory_Doctorow_-_Little_Brother.txt",
+      "local_path": "source/original/Cory_Doctorow_-_Little_Brother.txt",
+      "format": "plain text",
+      "license": "CC BY-NC-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "author": "Cory Doctorow",
+      "title": "Little Brother",
+      "partial_download": true,
+      "partial_size_bytes": 118894,
+      "partial_sha256": "59b098838d27b0bcce44374b7993feb8b57fcc589312c869d1e4c830a28eba1d",
+      "full_size_bytes": null,
+      "full_sha256": "FILL_IN_AFTER_MANUAL_DOWNLOAD"
+    },
+    {
+      "id": "html",
+      "url": "http://craphound.com/littlebrother/Cory_Doctorow_-_Little_Brother.htm",
+      "local_path": "source/original/Cory_Doctorow_-_Little_Brother.htm",
+      "format": "HTML",
+      "license": "CC BY-NC-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "author": "Cory Doctorow",
+      "title": "Little Brother",
+      "partial_download": true,
+      "partial_size_bytes": 134407,
+      "partial_sha256": "2640ef6deec3da8238b8376c590439d87e1601a6a30d16400cc7c28b9f9a3d69",
+      "full_size_bytes": null,
+      "full_sha256": "FILL_IN_AFTER_MANUAL_DOWNLOAD"
+    }
+  ],
+  "download_page": "https://craphound.com/littlebrother/download/"
+}
