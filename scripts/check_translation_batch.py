@@ -3,6 +3,13 @@
 check_translation_batch.py — Read-only validation harness for Little Brother
 Japanese translation sections.
 
+Translation status levels (in ascending order of completeness):
+  not_started   File is a placeholder; no content checks are applied.
+  pilot         Early trial translation; light checks only (status + footer).
+  draft         Full translation in progress; all checks applied.
+  reviewed      Translation reviewed; all checks applied.
+  complete      Translation finalised; all checks applied.
+
 Usage:
     python3 scripts/check_translation_batch.py 1
     python3 scripts/check_translation_batch.py 1 5
@@ -24,7 +31,7 @@ import re
 import sys
 import pathlib
 from dataclasses import dataclass
-from typing import List, Tuple, Set
+from typing import List, Optional, Tuple
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 DOCS_JA = REPO / "docs" / "ja"
@@ -39,6 +46,9 @@ NON_CHAPTER_SECTIONS = [
     "bibliography",
     "acknowledgments",
 ]
+
+# Status levels — lower index = less complete
+STATUS_LEVELS = ["not_started", "pilot", "draft", "reviewed", "complete"]
 
 
 @dataclass
@@ -103,7 +113,6 @@ def parse_args(argv: List[str]) -> List[Target]:
 
 # ── check patterns ─────────────────────────────────────────────────────────
 
-MOJIBAKE_RE = re.compile(r"[^\x00-\x7F　-鿿豈-﫿＀-￯ -~ -ÿĀ-ɏ]")
 MARKDOWN_FOOTNOTE_RE = re.compile(r"\[\^")
 TOP_CREDIT_RE = re.compile(
     r"^\s*\*?(?:原著|著者|著作権|出版|本翻訳|日本語訳)[::：]",
@@ -114,7 +123,23 @@ BARE_URL_JP_RE = re.compile(
 )
 
 
-def check_target(t: Target, issues: List[Tuple]):
+def _read_frontmatter_status(lines: List[str]) -> Optional[str]:
+    """Extract translation_status value from YAML frontmatter. Returns None if absent."""
+    in_fm = False
+    for i, line in enumerate(lines[:30]):
+        if i == 0 and line.strip() == "---":
+            in_fm = True
+            continue
+        if in_fm and line.strip() == "---":
+            break
+        if in_fm:
+            m = re.match(r"translation_status:\s*(\S+)", line)
+            if m:
+                return m.group(1).strip()
+    return None
+
+
+def check_target(t: Target, issues: List[Tuple], summary: List[Tuple]):
     tag = t.tag
     path = t.path
 
@@ -131,57 +156,63 @@ def check_target(t: Target, issues: List[Tuple]):
 
     lines = text.splitlines()
 
-    # 1 — check translation_status in frontmatter
-    fm_end = 0
-    in_fm = False
-    has_status = False
-    for i, line in enumerate(lines[:30]):
-        if i == 0 and line.strip() == "---":
-            in_fm = True
-            continue
-        if in_fm and line.strip() == "---":
-            fm_end = i
-            break
-        if in_fm and "translation_status" in line:
-            has_status = True
-    if not has_status:
-        issues.append((tag, "NO-STATUS",
-                       "No translation_status field in frontmatter"))
+    # ── Determine translation status ─────────────────────────────────────────
+    status = _read_frontmatter_status(lines)
 
-    # 2 — top credit block in first 30 lines
-    head = "\n".join(lines[:30])
-    for mm in TOP_CREDIT_RE.finditer(head):
-        lineno = head[:mm.start()].count("\n") + 1
-        issues.append((tag, "TOP-CREDIT",
-                       f"Line ~{lineno}: credit block in first 30 lines — "
-                       f"{mm.group().strip()[:60]}"))
+    if status is None:
+        issues.append((tag, "NO-STATUS", "No translation_status field in frontmatter"))
+        # Cannot determine skip level; fall through with all checks
+        status = "draft"  # treat as needing full check
+    elif status not in STATUS_LEVELS:
+        issues.append((tag, "BAD-STATUS",
+                       f"Unknown translation_status: {status!r} "
+                       f"(valid: {', '.join(STATUS_LEVELS)})"))
+        status = "draft"
 
-    # 3 — attribution footer present
+    summary.append((tag, status))
+
+    # not_started: file is a placeholder — skip ALL content checks
+    if status == "not_started":
+        return
+
+    # ── Checks that apply to pilot and above ─────────────────────────────────
+
+    # footer
     if "<small>" not in text:
-        issues.append((tag, "NO-FOOTER",
-                       "Missing <small> attribution footer"))
+        issues.append((tag, "NO-FOOTER", "Missing <small> attribution footer"))
 
-    # 4 — Markdown footnote syntax
-    for i, line in enumerate(lines, 1):
-        if MARKDOWN_FOOTNOTE_RE.search(line):
-            issues.append((tag, "MD-FOOTNOTE",
-                           f"Line {i}: Markdown footnote [^ — {line[:80]}"))
+    # ── Checks that apply to draft and above ─────────────────────────────────
 
-    # 5 — bare URL followed by Japanese
-    for i, line in enumerate(lines, 1):
-        if BARE_URL_JP_RE.search(line):
-            issues.append((tag, "BARE-URL",
-                           f"Line {i}: bare URL + Japanese — {line[:100]}"))
+    if status in ("draft", "reviewed", "complete"):
 
-    # 6 — Marcus first-person check: look for 私 as narrator (red flag)
-    if t.kind == "chapter":
-        # Heuristic: 私は appearing more than 5 times may indicate wrong pronoun
-        watashi_count = text.count("私は")
-        boku_count = text.count("僕は")
-        if watashi_count > 5 and boku_count < watashi_count:
-            issues.append((tag, "PRONOUN",
-                           f"「私は」 ({watashi_count}×) outnumbers 「僕は」 ({boku_count}×) — "
-                           "check narrator pronoun (should be 僕 for Marcus)"))
+        # top credit block in first 30 lines of body (after frontmatter)
+        head = "\n".join(lines[:30])
+        for mm in TOP_CREDIT_RE.finditer(head):
+            lineno = head[:mm.start()].count("\n") + 1
+            issues.append((tag, "TOP-CREDIT",
+                           f"Line ~{lineno}: credit block in first 30 lines — "
+                           f"{mm.group().strip()[:60]}"))
+
+        # Markdown footnote syntax
+        for i, line in enumerate(lines, 1):
+            if MARKDOWN_FOOTNOTE_RE.search(line):
+                issues.append((tag, "MD-FOOTNOTE",
+                               f"Line {i}: Markdown footnote [^ — {line[:80]}"))
+
+        # bare URL followed by Japanese
+        for i, line in enumerate(lines, 1):
+            if BARE_URL_JP_RE.search(line):
+                issues.append((tag, "BARE-URL",
+                               f"Line {i}: bare URL + Japanese — {line[:100]}"))
+
+        # Marcus pronoun check (chapters only)
+        if t.kind == "chapter":
+            watashi_count = text.count("私は")
+            boku_count = text.count("僕は")
+            if watashi_count > 5 and boku_count < watashi_count:
+                issues.append((tag, "PRONOUN",
+                               f"「私は」 ({watashi_count}×) outnumbers 「僕は」 ({boku_count}×) — "
+                               "check narrator pronoun (should be 僕 for Marcus)"))
 
 
 def main():
@@ -196,6 +227,7 @@ def main():
         sys.exit(0)
 
     issues: List[Tuple] = []
+    summary: List[Tuple] = []
 
     ch_count = sum(1 for t in targets if t.kind == "chapter")
     sec_count = sum(1 for t in targets if t.kind == "section")
@@ -207,7 +239,19 @@ def main():
     print(f"Checking {', '.join(desc)}...\n")
 
     for t in targets:
-        check_target(t, issues)
+        check_target(t, issues, summary)
+
+    # ── Status summary ────────────────────────────────────────────────────────
+    counts = {s: 0 for s in STATUS_LEVELS}
+    for _tag, st in summary:
+        if st in counts:
+            counts[st] += 1
+
+    print("Translation status summary:")
+    for level in STATUS_LEVELS:
+        if counts[level] or level in ("not_started", "draft", "complete"):
+            print(f"  {level:12s}: {counts[level]}")
+    print()
 
     if issues:
         print("=" * 60)

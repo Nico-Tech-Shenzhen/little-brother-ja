@@ -1,6 +1,6 @@
 ---
 title: '著者まえがき'
-translation_status: placeholder
+translation_status: not_started
 ---
 
 # 著者まえがき

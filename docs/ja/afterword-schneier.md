@@ -1,6 +1,6 @@
 ---
 title: 'あとがき（ブルース・シュナイアー）'
-translation_status: placeholder
+translation_status: not_started
 ---
 
 # あとがき — ブルース・シュナイアー

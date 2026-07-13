@@ -1,6 +1,6 @@
 ---
 title: '謝辞'
-translation_status: placeholder
+translation_status: not_started
 ---
 
 # 謝辞

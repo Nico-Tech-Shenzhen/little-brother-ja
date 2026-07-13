@@ -1,6 +1,6 @@
 ---
 title: 'あとがき（Andrew "bunnie" Huang）'
-translation_status: placeholder
+translation_status: not_started
 ---
 
 # あとがき — Andrew "bunnie" Huang

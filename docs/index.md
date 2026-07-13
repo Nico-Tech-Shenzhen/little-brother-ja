@@ -70,7 +70,7 @@ features:
 
 ## 協力
 
-誤訳、技術的な不正確さ、日本語として読みにくい箇所があれば、[GitHub Issue](https://github.com/tks/little-brother-ja/issues) でお知らせください。
+誤訳、技術的な不正確さ、日本語として読みにくい箇所があれば、[GitHub Issue](https://github.com/Nico-Tech-Shenzhen/little-brother-ja/issues) でお知らせください。
 
 ---
 

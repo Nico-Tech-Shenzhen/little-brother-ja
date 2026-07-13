@@ -22,7 +22,7 @@ export default defineConfig({
       { text: 'ライセンス', link: '/license' },
       {
         text: '翻訳方針',
-        link: 'https://github.com/tks/little-brother-ja/blob/main/TRANSLATION_GUIDE.md',
+        link: 'https://github.com/Nico-Tech-Shenzhen/little-brother-ja/blob/main/TRANSLATION_GUIDE.md',
       },
     ],
 
@@ -74,7 +74,7 @@ export default defineConfig({
         items: [
           {
             text: '翻訳方針',
-            link: 'https://github.com/tks/little-brother-ja/blob/main/TRANSLATION_GUIDE.md',
+            link: 'https://github.com/Nico-Tech-Shenzhen/little-brother-ja/blob/main/TRANSLATION_GUIDE.md',
           },
           { text: 'コンテンツライセンス', link: '/license' },
           { text: 'クレジット', link: '/credits' },
@@ -90,7 +90,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/tks/little-brother-ja/edit/main/docs/:path',
+      pattern: 'https://github.com/Nico-Tech-Shenzhen/little-brother-ja/edit/main/docs/:path',
       text: 'このページを編集',
     },
   },

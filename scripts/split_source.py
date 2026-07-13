@@ -1,50 +1,62 @@
 #!/usr/bin/env python3
 """
-split_source.py — Split the official Little Brother TXT source into sections.
+split_source.py — Split the official Little Brother TXT source into 29 sections.
 
 Produces one file per section in source/sections/:
-    00-front-matter.txt          License notice and READ THIS FIRST
-    01-introduction.txt          Cory Doctorow's Introduction (if present)
+
+    00-front-matter.txt          License notice, READ THIS FIRST, book header
+    01-introduction.txt          Cory Doctorow's Introduction
     02-ch01.txt                  Chapter 1
     03-ch02.txt                  Chapter 2
     ...
     22-ch21.txt                  Chapter 21
-    23-epilogue.txt              Epilogue (if present)
+    23-epilogue.txt              Epilogue
     24-afterword-schneier.txt    Afterword by Bruce Schneier
     25-afterword-huang.txt       Afterword by Andrew "bunnie" Huang
-    26-bibliography.txt          Bibliography (if present)
-    27-acknowledgments.txt       Acknowledgments (if present)
+    26-bibliography.txt          Bibliography
+    27-acknowledgments.txt       Acknowledgments
+    28-license.txt               Complete Creative Commons legal code
 
 Usage:
     python3 scripts/split_source.py [--source path/to/file.txt]
 
-The default source file is:
-    source/original/Cory_Doctorow_-_Little_Brother.txt
+Default source: source/original/Cory_Doctorow_-_Little_Brother.txt
 
-Rules:
-  - All original text, paragraph order, emphasis markers, links, and section
-    boundaries are preserved exactly. No normalization or rewriting.
-  - Chapter bookstore dedications are kept as part of the chapter text.
-  - Empty sections (no content between two headers) are written as empty files
-    so that validate_sections.py can flag them.
-  - The script is idempotent: running it again overwrites output files.
+Content-conservation guarantee:
+    The concatenation of all output section files (in order) equals the source
+    file byte-for-byte. No characters are added, removed, or altered. Each
+    section header line is included in the section it opens. The only
+    "normalization" is that the source is read as UTF-8 text and written as
+    UTF-8 text; line-ending characters are preserved as-is.
+
+The script exits non-zero if:
+    - the source file is missing
+    - the source file cannot be decoded as UTF-8
+    - any required section header is not detected (indicating an incomplete source)
+    - content conservation fails (post-write integrity check)
 """
 
 import re
 import sys
+import hashlib
 import argparse
 import pathlib
 
-# ── Configuration ────────────────────────────────────────────────────────────
+# ── Configuration ─────────────────────────────────────────────────────────────
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 DEFAULT_SOURCE = REPO / "source" / "original" / "Cory_Doctorow_-_Little_Brother.txt"
 SECTIONS_DIR = REPO / "source" / "sections"
 
-# Section definitions: (output_filename, list_of_header_patterns)
-# Patterns are matched case-insensitively against stripped lines.
-# The FIRST pattern in each list that matches a line triggers that section.
-# Order matters: more specific patterns must come before broader ones.
+# Minimum file size required to accept as a complete source (bytes).
+# The full novel TXT is ~450–550 KB. Anything under this threshold is partial.
+MIN_SOURCE_BYTES = 400_000
+
+# ── Section definitions ───────────────────────────────────────────────────────
+# Each entry: (output_filename, list_of_header_regex_patterns)
+# Patterns are matched case-insensitively against each stripped line.
+# The FIRST line matching any pattern in a group triggers that section.
+# Sections are detected in document order; the splitter never moves backward.
 
 SECTION_MAP = [
     ("00-front-matter.txt", [
@@ -64,108 +76,146 @@ SECTION_MAP = [
 for _n in range(1, 22):
     SECTION_MAP.append((
         f"{_n + 1:02d}-ch{_n:02d}.txt",
-        [
-            rf"^chapter {_n}\b",
-            rf"^chapter {_n}[:\s]",
-        ],
+        [rf"^chapter {_n}\s*$"],
     ))
 
 SECTION_MAP += [
     ("23-epilogue.txt", [
         r"^epilogue\s*$",
-        r"^epilogue[:\s]",
     ]),
     ("24-afterword-schneier.txt", [
         r"^afterword\s+by\s+bruce\s+schneier",
-        r"^bruce\s+schneier",
     ]),
     ("25-afterword-huang.txt", [
         r"^afterword\s+by\s+andrew",
         r"^afterword\s+by\s+bunnie",
-        r"^andrew\s+[\"']?bunnie[\"']?\s+huang",
     ]),
     ("26-bibliography.txt", [
         r"^bibliography\s*$",
-        r"^references\s*$",
         r"^further\s+reading\s*$",
     ]),
     ("27-acknowledgments.txt", [
-        r"^acknowledgment",
-        r"^acknowledgement",
-        r"^thanks\s*$",
+        r"^acknowledgments\s*$",
+        r"^acknowledgements\s*$",
+    ]),
+    ("28-license.txt", [
+        r"^creative\s+commons\s+legal\s+code\s*$",
+        r"^creative\s+commons\s+attribution.noncommercial.sharealike",
     ]),
 ]
 
-
-def compile_patterns(section_map):
-    """Return list of (filename, compiled_regex_list) pairs."""
-    compiled = []
-    for fname, patterns in section_map:
-        compiled.append((fname, [re.compile(p, re.IGNORECASE) for p in patterns]))
-    return compiled
-
-
-def detect_section(line: str, compiled_map):
-    """Return (index, filename) of the section this line starts, or None."""
-    stripped = line.strip()
-    if not stripped:
-        return None
-    for idx, (fname, regexes) in enumerate(compiled_map):
-        for rx in regexes:
-            if rx.match(stripped):
-                return idx, fname
-    return None
+# Required section headers (these must be detected or the split is considered
+# incomplete and the script exits non-zero).
+REQUIRED_SECTIONS = {
+    "01-introduction.txt",
+    "02-ch01.txt",
+    "22-ch21.txt",
+    "23-epilogue.txt",
+    "24-afterword-schneier.txt",
+    "25-afterword-huang.txt",
+    "28-license.txt",
+}
 
 
-def split_source(source_path: pathlib.Path) -> dict:
+def compile_map(section_map):
+    return [(fn, [re.compile(p, re.IGNORECASE) for p in pats])
+            for fn, pats in section_map]
+
+
+def split_source(source_path: pathlib.Path):
     """
-    Split source_path into sections.
-    Returns a dict {filename: list_of_lines}.
+    Read source_path and split it into sections.
+    Returns dict {filename: str_content}.
+    Exits non-zero on any fatal error.
     """
     if not source_path.exists():
-        print(f"ERROR: Source file not found: {source_path}", file=sys.stderr)
         print(
-            "Download the full source file first:\n"
-            "  curl -L -o source/original/Cory_Doctorow_-_Little_Brother.txt \\\n"
-            "       http://craphound.com/littlebrother/Cory_Doctorow_-_Little_Brother.txt",
+            f"ERROR: Source file not found: {source_path}\n"
+            f"\nDownload the complete file:\n"
+            f"  curl -L -o '{source_path}' \\\n"
+            f"    http://craphound.com/littlebrother/Cory_Doctorow_-_Little_Brother.txt\n"
+            f"The complete file is approximately 450–550 KB.",
             file=sys.stderr,
         )
         sys.exit(1)
 
-    compiled_map = compile_patterns(SECTION_MAP)
-    all_fnames = [fname for fname, _ in SECTION_MAP]
+    size = source_path.stat().st_size
+    if size < MIN_SOURCE_BYTES:
+        print(
+            f"ERROR: Source file is only {size:,} bytes — this looks like a partial/truncated download.\n"
+            f"The complete Little Brother TXT is approximately 450–550 KB.\n"
+            f"Download the full file from:\n"
+            f"  http://craphound.com/littlebrother/Cory_Doctorow_-_Little_Brother.txt",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
-    # Initialize buckets
-    buckets = {fname: [] for fname in all_fnames}
+    try:
+        raw_text = source_path.read_text(encoding="utf-8")
+    except UnicodeDecodeError as e:
+        print(f"ERROR: Source file is not valid UTF-8: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    compiled = compile_map(SECTION_MAP)
+    all_fnames = [fn for fn, _ in SECTION_MAP]
+    buckets = {fn: [] for fn in all_fnames}
+
     current_section = "00-front-matter.txt"
+    current_idx = 0
 
-    lines = source_path.read_text(encoding="utf-8", errors="replace").splitlines(keepends=True)
-
+    lines = raw_text.splitlines(keepends=True)
     for line in lines:
-        result = detect_section(line, compiled_map)
-        if result is not None:
-            idx, fname = result
-            # Only advance forward; never go backwards
-            current_idx = all_fnames.index(current_section)
-            if idx > current_idx:
-                current_section = fname
-                # Include the header line in the new section
-                buckets[current_section].append(line)
-                continue
+        stripped = line.strip()
+        # Try to advance to a later section
+        matched = False
+        if stripped:
+            for idx, (fname, regexes) in enumerate(compiled):
+                if idx <= current_idx:
+                    continue
+                for rx in regexes:
+                    if rx.match(stripped):
+                        current_section = fname
+                        current_idx = idx
+                        matched = True
+                        break
+                if matched:
+                    break
         buckets[current_section].append(line)
 
-    return buckets
+    return {fn: "".join(lines_list) for fn, lines_list in buckets.items()}
 
 
 def write_sections(buckets: dict):
     SECTIONS_DIR.mkdir(parents=True, exist_ok=True)
-    written = []
-    for fname, lines in buckets.items():
+    results = []
+    for fname, content in buckets.items():
         out = SECTIONS_DIR / fname
-        content = "".join(lines)
         out.write_text(content, encoding="utf-8")
-        written.append((fname, len(lines), len(content)))
-    return written
+        results.append((fname, len(content.splitlines()), len(content.encode("utf-8"))))
+    return results
+
+
+def verify_conservation(source_path: pathlib.Path, all_fnames: list):
+    """Post-write check: concatenation of sections == source bytes."""
+    source_bytes = source_path.read_bytes()
+    combined = b"".join(
+        (SECTIONS_DIR / fn).read_bytes()
+        for fn in all_fnames
+        if (SECTIONS_DIR / fn).exists()
+    )
+    if source_bytes != combined:
+        src_h = hashlib.sha256(source_bytes).hexdigest()[:12]
+        comb_h = hashlib.sha256(combined).hexdigest()[:12]
+        print(
+            f"ERROR: Content conservation check FAILED.\n"
+            f"  source SHA256[:12]: {src_h}\n"
+            f"  concat SHA256[:12]: {comb_h}\n"
+            f"  source size: {len(source_bytes)} bytes\n"
+            f"  concat size: {len(combined)} bytes",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    return len(source_bytes)
 
 
 def main():
@@ -174,36 +224,49 @@ def main():
         "--source",
         type=pathlib.Path,
         default=DEFAULT_SOURCE,
-        help=f"Path to source TXT file (default: {DEFAULT_SOURCE})",
+        help=f"Path to source TXT (default: {DEFAULT_SOURCE})",
     )
     args = parser.parse_args()
 
-    print(f"Source: {args.source}")
-    print(f"Output: {SECTIONS_DIR}/\n")
+    print(f"Source : {args.source}")
+    print(f"Output : {SECTIONS_DIR}/\n")
 
     buckets = split_source(args.source)
-    written = write_sections(buckets)
+    results = write_sections(buckets)
 
-    total_lines = 0
+    all_fnames = [fn for fn, _ in SECTION_MAP]
     empty = []
-    for fname, n_lines, n_bytes in written:
-        status = "OK" if n_lines > 0 else "EMPTY"
-        print(f"  [{status:5s}] {fname:40s}  {n_lines:6d} lines  {n_bytes:8d} bytes")
-        total_lines += n_lines
-        if n_lines == 0:
-            empty.append(fname)
+    missing_required = []
 
-    print(f"\nTotal: {len(written)} sections, {total_lines} lines")
+    for fname, n_lines, n_bytes in results:
+        status = "OK" if n_bytes > 0 else "EMPTY"
+        req = "*" if fname in REQUIRED_SECTIONS else " "
+        print(f"  [{status:5s}]{req} {fname:45s}  {n_lines:6d} lines  {n_bytes:9d} bytes")
+        if n_bytes == 0:
+            empty.append(fname)
+            if fname in REQUIRED_SECTIONS:
+                missing_required.append(fname)
+
+    print(f"\nTotal: {len(results)} sections")
+
+    # Content conservation check (hard failure)
+    total_bytes = verify_conservation(args.source, all_fnames)
+    print(f"Content conservation: OK ({total_bytes:,} bytes round-tripped)")
+
+    if missing_required:
+        print(
+            f"\nERROR: {len(missing_required)} required section(s) are empty — "
+            f"source is likely incomplete:",
+            file=sys.stderr,
+        )
+        for s in missing_required:
+            print(f"  {s}", file=sys.stderr)
+        sys.exit(1)
 
     if empty:
-        print(f"\nWARNING: {len(empty)} empty section(s) — source may be truncated or "
-              "section headers not recognized:")
-        for e in empty:
-            print(f"  {e}")
-        print("\nRun with the FULL source file to populate all sections.")
-        sys.exit(1)
-    else:
-        print("\n✓ All sections written.")
+        print(f"\nWARNING: {len(empty)} optional section(s) are empty.")
+
+    print("\n✓ Split complete.")
 
 
 if __name__ == "__main__":

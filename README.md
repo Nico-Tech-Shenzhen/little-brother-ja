@@ -2,6 +2,10 @@
 
 Japanese translation project for *Little Brother* by Cory Doctorow.
 
+- **Repository**: https://github.com/Nico-Tech-Shenzhen/little-brother-ja
+- **Site**: https://takasumasakazu.net/little-brother-ja/
+- **Translator**: 高須正和 / TAKASU Masakazu (@tks)
+
 ## About this project
 
 *Little Brother* is a 2008 science fiction novel by Cory Doctorow, published by Tor Books.

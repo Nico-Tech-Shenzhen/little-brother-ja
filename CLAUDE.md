@@ -73,6 +73,7 @@ Bad (do not use Japanese in commit messages):
 | `source/sections/25-afterword-huang.txt` | Afterword by Andrew "bunnie" Huang |
 | `source/sections/26-bibliography.txt` | Bibliography |
 | `source/sections/27-acknowledgments.txt` | Acknowledgments |
+| `source/sections/28-license.txt` | Complete Creative Commons legal code (not translated) |
 
 **Chapters end at 21.** Do not create `docs/ja/ch22.md` or beyond.  
 Each chapter maps to `docs/ja/chNN.md` (e.g. `docs/ja/ch01.md`).  

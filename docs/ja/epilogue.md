@@ -1,6 +1,6 @@
 ---
 title: 'エピローグ'
-translation_status: placeholder
+translation_status: not_started
 ---
 
 # エピローグ
