@@ -19,8 +19,10 @@
    internet during a translation session. If a file is missing or corrupt, alert the user.
 8. **`/lb-rule-update` edits only `TRANSLATION_GUIDE.md`, `CHARACTERS.md`, and/or `glossary.tsv`.**
    It must not edit translated section files or retranslate content unless explicitly instructed.
-9. **`/lb-postcheck` and `/lb-full-recheck` are review-only.** They must not rewrite translated
-   prose unless the user explicitly requests a separate fix task.
+9. **`/lb-rule-audit` edits only `TRANSLATION_GUIDE.md`, `CHARACTERS.md`, and/or `glossary.tsv`.**
+   It must not edit translated section files or retranslate content.
+10. **`/lb-postcheck` and `/lb-full-recheck` are review-only.** They must not rewrite translated
+    prose unless the user explicitly requests a separate fix task.
 
 ## Operational language
 
@@ -146,9 +148,14 @@ Each wrapper delegates to the matching `.claude/skills/lb-*/SKILL.md` for the fu
 | `/lb-translate <section>` | Translate a section end-to-end |
 | `/lb-postcheck <section>` | Review a translated section without rewriting |
 | `/lb-full-recheck` | Revalidate all translated sections against latest rules |
-| `/lb-rule-update <description>` | Update TRANSLATION_GUIDE.md / CHARACTERS.md / glossary.tsv only |
+| `/lb-rule-update <description>` | Incorporate new feedback and update TRANSLATION_GUIDE.md / CHARACTERS.md / glossary.tsv |
+| `/lb-rule-audit [all\|terminology\|voice]` | Audit, consolidate, and de-conflict translation rules without editing translated prose |
 
-**`/lb-rule-update` is rule/glossary-only.** It must not edit translated section files.  
+**`/lb-rule-update` is rule/glossary-only.** Incorporates new user feedback and performs a
+focused audit of the rules it touches. It must not edit translated section files or retranslate.  
+**`/lb-rule-audit` is rule/glossary-only.** Performs periodic project-wide rule maintenance
+without requiring new feedback. Default scope is `all`. It must not edit `docs/ja/*.md`.  
+**Both skills confirm** `No docs/ja/*.md files were edited` at the end of every run.  
 **`/lb-postcheck` and `/lb-full-recheck` are review-only.** They must not rewrite prose.
 
 ### Validation harness
