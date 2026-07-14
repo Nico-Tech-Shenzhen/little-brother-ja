@@ -18,7 +18,7 @@
       "encoding": "utf-8",
       "complete": true,
       "validation_status": "verified",
-      "notes": "Complete file. All 29 sections present. Conservation check: 658,936 bytes round-tripped. Chapters 1-21, Epilogue, both Afterwords, Bibliography, Acknowledgments, and Creative Commons legal code all confirmed present."
+      "notes": "Complete file. All 29 sections present. Conservation check: 658,936 bytes round-tripped, SHA-256 verified. split_source.py fixed 2026-07-14: write_bytes() used for section output, eliminating LF-to-CRLF conversion on Windows. Chapters 1-21, Epilogue, both Afterwords, Bibliography, Acknowledgments, and Creative Commons legal code all confirmed present."
     },
     {
       "id": "html",

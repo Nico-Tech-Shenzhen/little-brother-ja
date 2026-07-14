@@ -5,3 +5,5 @@ docs/.vitepress/cache/
 __pycache__/
 .DS_Store
 Thumbs.db
+
+source/original/*.bak
