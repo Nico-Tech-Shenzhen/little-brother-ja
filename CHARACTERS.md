@@ -40,19 +40,25 @@ Ch. 1 dedication confirmed decisions:
 
 **Voice rules (confirmed by pilot):**
 - Sentence endings: 「〜だ」「〜だった」「〜だろう」 — not 「〜です」「〜ます」 in narration
-- Exception: Marcus uses deliberate keigo (丁寧語) — 「〜います」「〜いたします」「ご〜いただく」 — when intentionally messing with authority figures. This politeness IS the joke; it is his "tell."
+- Rhythm: Short punchy sentences at chapter openings and punch lines; prefer direct declarative endings over explanatory constructions like 「〜ということを意味する」. See `TRANSLATION_GUIDE.md` § Marcus's sentence rhythm.
+- Exception: Marcus uses deliberate keigo (丁寧語) when intentionally mocking authority figures — see Tell below.
 - Excitement: Short sentences, clipped rhythm
 - Fear/tension: Even shorter. Fragment-like.
 - Technical explanations: Precise but still informal — "here's how it works" voice
 - Direct address to reader: preserve as 「きっと〜と思ってるだろう」or similar
 - Self-deprecating humor: present but understated
-- 2000s internet slang (e.g., "teh suck"): render functionally in current casual Japanese; add TODO comment for human review
+- 2000s internet slang (e.g., "teh suck"): render functionally in period-appropriate casual Japanese; add TODO comment for human review
 
-**Tell:** When Marcus uses deliberate polite/formal Japanese in dialogue with authority figures, it signals he is messing with them — equivalent to "sir" in the English source.
-Confirmed example (Ch. 1 pilot, revised):
-> 「何の話か説明していただければ、すぐに真剣に受け止めますよ。先生」
-> 権威ある人間をからかうとき、僕はいつも「先生」をつける。これが僕のテルだ。
-Use 「〜ますよ」「〜ていただければ」 rather than stiff business-letter forms (「〜いたします」).
+**Tell (authority-mocking behavior):** When Marcus faces authority figures, he deliberately
+switches to conspicuously polite language — this is his "tell." The pragmatic function is
+mocking through exaggerated politeness; the specific Japanese form varies by context.
+See `TRANSLATION_GUIDE.md` § Marcus's authority-mocking "tell" for the full rule.
+
+Confirmed example (Ch. 1 pilot — Benson, vice-principal):
+> 「何の話か説明していただければ、すぐに真剣に受け止めますよ、先生」
+> 権力を振りかざす相手をからかうとき、僕はいつもわざと丁寧な言葉を使う。これが僕のテルだ。
+
+Note: the vocative follows a comma, not a period. Do not use 「〜いたします」 alone (too stiff).
 
 **Known handles:** M1k3y (online identity as leader of Xnet), w1n5t0n (his ParanoidLinux login and school-hacking handle)
 

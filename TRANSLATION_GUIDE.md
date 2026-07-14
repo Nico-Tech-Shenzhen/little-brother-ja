@@ -159,6 +159,81 @@ mid-paragraph asides. Preserve these structural moves in Japanese.
 **Direct address to reader** ("You're probably wondering…"):
 Render as 「きっと〜と思ってるだろう」 or similar. Do not flatten to impersonal prose.
 
+## Marcus's sentence rhythm — avoid translation-shaped endings
+
+Marcus's English narration often uses patterns like `X, and that makes me Y` or
+`X, which means I'm one of the most Y`. In Japanese, these risk producing
+「〜ということを意味する」 or 「〜ということになる」 — which sound like translated prose,
+not Marcus's voice.
+
+Rules:
+- Split long explanatory English sentences when a short declarative sequence gives Marcus more force.
+- Avoid literal explanatory endings such as 「〜ということを意味する」 when Marcus would state the point directly.
+- `X, and that makes me Y` may become `Xだ。つまりYってことだ` when the context calls for punch.
+- Do not mechanically apply 「ってことだ」 in every paragraph — reserve it for chapter openings and punch lines.
+- Chapter openings and punch lines deserve especially strong, concise rhythm.
+
+Good example (Ch. 1 pilot opening):
+> 僕はサンフランシスコのミッション地区にあるセザール・チャベス高校の3年生だ。つまり、世界でもっとも監視されている人間の一人ってことだ。
+
+See also Marcus-specific rhythm note in `CHARACTERS.md`.
+
+## Verify agency after rebuilding sentences
+
+When rebuilding English sentences in Japanese, verify who acts on whom:
+- Do not preserve English surface grammar when it changes agency, possession, or control.
+- `have a jailer` in this context means being assigned or subjected to a jailer, not hiring one.
+  Japanese: 「看守につかれる」 (to be saddled with / subjected to a jailer).
+- Check transitive/intransitive and active/passive relationships after every rebuild.
+- After rebuild, recheck: does the Japanese subject do what the English subject does?
+
+## Do not infer sibling age or birth order
+
+English `brother` and `sister` are not age-marked. Rules:
+- Never add 「兄」「弟」「姉」「妹」 unless the source text or established context confirms age order.
+- Default to 「兄弟」「姉妹」 or restructure the sentence.
+- 「家族」 may be used only when the exact sibling relationship is not important and Japanese
+  reads more naturally; report the loss of specificity when it matters.
+- Do not infer age, rank, gender, family order, or any relationship detail beyond the source.
+
+## Parse compressed coordination and idioms before translating
+
+When a sentence contains compressed or humorous coordination, identify the grammatical role
+of each element before translating:
+- Do not invent groups of people when the source coordinates two reasons, standards, or judgments.
+- Translate the intended proposition, not the apparent English noun sequence.
+- Recheck parallel constructions for scope and attachment.
+
+Good example (Ch. 1 pilot — two reasons/standards, not two types of person):
+> 賢いやり方も、衛生面でも、真ん中を選ぶのが正解だ。
+
+## Preserve vivid metaphor without Japanese tautology
+
+- Preserve vivid, grotesque, humorous, or excessive metaphors rather than softening or abstracting them.
+- After preserving the image, remove any semantic redundancy introduced in Japanese.
+- Tautology to avoid: 「穴の開いた傷口」 — a wound with a hole is redundant; 「ぽっかり開いた傷口」 expresses the image cleanly.
+- Preserve insult strength unless Japanese comprehension genuinely requires adjustment.
+
+## Translate perception expressions by function, not word-by-word
+
+- For visual conspicuousness: 「嫌でも目につく」「いやでも目に入る」
+- For cognitive obviousness: 「いやでもわかる」
+- Avoid unnatural collocations such as 「痛いくらいにわかった」 when the intended meaning is visual (something is conspicuous to the eye).
+- Split overloaded descriptions when Japanese rhythm improves from doing so.
+- `painfully obvious` is context-dependent: confirm whether the source is about vision, cognition, or social awareness before choosing a rendering.
+
+## Avoid redundant synonym glosses
+
+- Do not write 「ハンドル（ハンドルネーム）」 — choose one established Japanese term.
+- Parentheses should add information (the English original, an abbreviation expansion, or a context note), not repeat the same meaning in different words.
+- On first mention, use the term from `glossary.tsv`; add the English form in parentheses only when the English itself carries meaning for the reader.
+
+## Locative precision
+
+- Distinguish 「学校で」 / 「校内で」 (at/inside school) from 「学校周辺で」 (in the school's vicinity/neighborhood).
+- Resolve English prepositions and broad locative phrases according to the actual scope described in the source.
+- When an action takes place within the school building or institution, use 「学校で」 or 「校内で」.
+
 ## Technical vocabulary policy
 
 Always check `glossary.tsv` first. If a term is missing, add it before translating.
@@ -219,22 +294,29 @@ Rules:
 - Keep the same structural notes as novel prose (see Bookstore dedications section below).
 - Do NOT smooth into formal Japanese; Doctorow's dedication voice is personal and direct.
 
-## Marcus's "sir" tell — translation rule (confirmed by Ch. 1 pilot)
+## Marcus's authority-mocking "tell" — pragmatic function rule (confirmed by Ch. 1 pilot)
 
-In the English source, Marcus says "sir" to authority figures when he is deliberately messing
-with them. He calls this his "tell" — a poker term for an involuntary reveal.
+In the English source, Marcus says "sir" to authority figures when he is deliberately mocking
+them through exaggerated politeness. He calls this his "tell" — a poker term for an
+involuntary reveal.
 
-In Japanese translation, render this as **deliberate use of keigo (丁寧語)** in dialogue:
-- Use forms such as 「〜ますよ」「〜ていただければ」 — polite but not stiff
-- Address the authority figure as 「先生」 even if they are not a teacher
-- Avoid over-formal business-letter register (「〜いたします」 alone risks sounding stiff)
-- The politeness IS the joke: a sarcastic teen using measured speech while being defiantly uncooperative
+**The reusable rule: translate the pragmatic function, not a fixed word.**
+- Marcus mocks authority by deliberately switching to conspicuously polite language.
+- Preserve this behavior: the reader must feel that Marcus is mocking the person through exaggerated politeness.
+- The specific Japanese form depends on authority figure and context: 「先生」, another appropriate title, a polite sentence ending, or a shift in the entire dialogue register.
+- Use forms such as 「〜ますよ」「〜ていただければ」 — polite but not stiff.
+- Do not make Marcus sound like a business letter; avoid 「〜いたします」 alone.
+- Do not fix "sir" as a single mandatory Japanese word. Confirm the appropriate form from each scene.
+- This behavior applies to teachers, police, DHS staff, and any authority figure where the source shows mocking politeness.
+- Japanese dialogue punctuation: use 「〜ですよ、先生」 with a comma before the vocative, not a period that splits it into a separate utterance.
 
-Example (Ch. 1 pilot, revised and confirmed):
-> 「何の話か説明していただければ、すぐに真剣に受け止めますよ。先生」
+Example (Ch. 1 pilot, confirmed):
+> 「何の話か説明していただければ、すぐに真剣に受け止めますよ、先生」
 
 The follow-up narration must make the "tell" explicit:
-> 権威ある人間をからかうとき、僕はいつも「先生」をつける。これが僕のテルだ。
+> 権力を振りかざす相手をからかうとき、僕はいつもわざと丁寧な言葉を使う。これが僕のテルだ。
+
+See Marcus's character entry in `CHARACTERS.md` for the recurring behavior note.
 
 ## LLM translation checklist
 
