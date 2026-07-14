@@ -158,6 +158,20 @@ without requiring new feedback. Default scope is `all`. It must not edit `docs/j
 **Both skills confirm** `No docs/ja/*.md files were edited` at the end of every run.  
 **`/lb-postcheck` and `/lb-full-recheck` are review-only.** They must not rewrite prose.
 
+### Rule Proposal Policy
+
+If you identify a recurring translation issue that may be worth generalizing, do not silently modify the translation guide, character guide, or glossary. Propose it as a **Rule Candidate** using:
+
+- **Problem:** What recurring issue was observed?
+- **Proposed Rule:** The rule in concise, reusable language.
+- **Rationale:** Why should this become a persistent rule?
+- **Expected Scope:** Where should this rule apply?
+- **Possible Risks:** Where might it overgeneralize, conflict with existing rules, or require exceptions?
+
+Propose candidates only for issues likely to recur. Local wording corrections, isolated mistranslations, and chapter-specific decisions should remain local fixes. Keep the number of candidates small and prioritize only high-value reusable rules.
+
+The human translator decides whether to adopt, revise, or reject each candidate. Never modify `TRANSLATION_GUIDE.md`, `CHARACTERS.md`, or `glossary.tsv` without explicit approval.
+
 ### Validation harness
 
 ```bash
