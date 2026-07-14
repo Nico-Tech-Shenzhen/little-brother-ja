@@ -22,7 +22,7 @@ Every `docs/ja/*.md` file must include the following visible footer `<small>` bl
 <small>
 *原著*: *Little Brother* © 2008 Cory Doctorow<br>
 *出版*: Tor Books<br>
-*日本語訳*: 高須正和（@tks） — [https://takasumasakazu.net](https://takasumasakazu.net) — CC BY-NC-SA 3.0<br>
+*日本語訳・レビュー*: ニコ技深圳コミュニティ / 高須正和（@tks） — [https://takasumasakazu.net](https://takasumasakazu.net) — CC BY-NC-SA 3.0<br>
 *注記*: 本翻訳は、原著の Creative Commons ライセンス条件に従って公開する翻訳であり、出版社による公式日本語版ではありません。
 </small>
 ```
@@ -206,6 +206,35 @@ Use visible note block only when the reader genuinely needs context:
 
 Do not add translator notes for technology, culture, or vocabulary that a Japanese
 reader familiar with tech and internet culture would already know.
+
+## Chapter-dedication voice — distinct from Marcus
+
+Each chapter opens with a dedication written by **Cory Doctorow**, not by Marcus Yallow.
+These dedications are personal, conversational authorial asides — written in the first person
+but from Doctorow's adult perspective, not Marcus's teenage narrator voice.
+
+Rules:
+- Use 「私」 (not 「僕」) where a first-person pronoun is needed, or omit the subject naturally.
+- Voice: warm, personal, adult essay — not Marcus's fast-paced teen narration.
+- Keep the same structural notes as novel prose (see Bookstore dedications section below).
+- Do NOT smooth into formal Japanese; Doctorow's dedication voice is personal and direct.
+
+## Marcus's "sir" tell — translation rule (confirmed by Ch. 1 pilot)
+
+In the English source, Marcus says "sir" to authority figures when he is deliberately messing
+with them. He calls this his "tell" — a poker term for an involuntary reveal.
+
+In Japanese translation, render this as **deliberate use of keigo (丁寧語)** in dialogue:
+- Use forms such as 「〜ますよ」「〜ていただければ」 — polite but not stiff
+- Address the authority figure as 「先生」 even if they are not a teacher
+- Avoid over-formal business-letter register (「〜いたします」 alone risks sounding stiff)
+- The politeness IS the joke: a sarcastic teen using measured speech while being defiantly uncooperative
+
+Example (Ch. 1 pilot, revised and confirmed):
+> 「何の話か説明していただければ、すぐに真剣に受け止めますよ。先生」
+
+The follow-up narration must make the "tell" explicit:
+> 権威ある人間をからかうとき、僕はいつも「先生」をつける。これが僕のテルだ。
 
 ## LLM translation checklist
 
