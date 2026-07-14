@@ -159,6 +159,37 @@ mid-paragraph asides. Preserve these structural moves in Japanese.
 **Direct address to reader** ("You're probably wondering…"):
 Render as 「きっと〜と思ってるだろう」 or similar. Do not flatten to impersonal prose.
 
+## Surface syntax versus rhetorical information timing
+
+English surface clause order does not need to be preserved. Reorder subjects, modifiers, reasons,
+and clauses freely when doing so produces immediately understandable Japanese.
+
+However, distinguish between:
+- **Surface syntax** — English grammatical scaffolding that may be freely rebuilt.
+- **Rhetorical information sequence** — an ordering that creates characterization, humor, emphasis,
+  suspense, interruption, or a punch line.
+
+Preserve the sequence when the original order performs a literary function; rebuild freely otherwise.
+
+Structures that typically carry rhetorical function and must retain their sequence:
+- setup → reason → conclusion
+- observation → explanation → sarcastic judgment
+- proper noun or event → afterthought evaluation
+- list of traits → dismissive conclusion
+- action → parenthetical interruption → continuation
+
+Good example — natural Japanese syntax rebuilt, but setup → reason → conclusion preserved:
+> 一番奥の個室はいつもいちばん汚い。臭いと気持ち悪さから逃れようとして、みんな真っ先に奥へ行くからだ。賢く衛生的にいくなら、真ん中を選ぶのが正解だ。
+
+**Rule-boundary clarification:**
+- Clarity over literal English syntax — always.
+- Rhetorical sequence over merely tidy Japanese — when it carries voice or humor.
+- Not every English clause order has rhetorical significance; identify the function before deciding.
+- Technical explanations may be reordered more aggressively for comprehension.
+- Jokes, delayed evaluations, interruptions, and punch lines require more caution.
+- Do not mechanically preserve every dash or every sentence boundary.
+- Preserve function, not word order.
+
 ## Marcus's sentence rhythm — avoid translation-shaped endings
 
 Marcus's English narration often uses patterns like `X, and that makes me Y` or
@@ -227,6 +258,25 @@ Good example (Ch. 1 pilot — two reasons/standards, not two types of person):
 - Do not write 「ハンドル（ハンドルネーム）」 — choose one established Japanese term.
 - Parentheses should add information (the English original, an abbreviation expansion, or a context note), not repeat the same meaning in different words.
 - On first mention, use the term from `glossary.tsv`; add the English form in parentheses only when the English itself carries meaning for the reader.
+
+## Preserve afterthoughts and delayed evaluations; limit noun repetition
+
+When the source repeats a proper noun because of English sentence structure, Japanese may replace the
+second occurrence with 「これ」「それ」「このゲーム」 or a local restructuring.
+
+Do not remove an afterthought, boast, judgment, or punch line merely to avoid repetition.
+Preserve the timing of the evaluation even when the noun itself is not repeated.
+
+Good example — Marcus's boast arrives after the game is introduced; that timing is the point:
+> ハラジュク・ファン・マッドネスに新情報が上がったという知らせだ。ちなみに、これは人類史上最高のゲームだ。
+
+Do not restructure as:
+> 人類史上最高のゲームであるハラジュク・ファン・マッドネスに……
+
+The relative-clause form moves the boast before the noun and removes the afterthought effect.
+
+See also **Surface syntax versus rhetorical information timing** above; and Marcus-specific
+interruption and list→judgment rules in `CHARACTERS.md`.
 
 ## Locative precision
 

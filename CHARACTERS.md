@@ -60,6 +60,26 @@ Confirmed example (Ch. 1 pilot — Benson, vice-principal):
 
 Note: the vocative follows a comma, not a period. Do not use 「〜いたします」 alone (too stiff).
 
+**Interruptions and afterthoughts:** Marcus frequently interrupts an action with a technical
+concern, private judgment, joke, or explanation. Preserve the interruption's position when it
+reveals his priorities or train of thought. Do not move the interruption before or after the action
+to produce tidier explanatory prose. Dashes, parenthetical rhythm, or sentence interruption should
+be preserved when natural Japanese can support it. The interruption may be rewritten internally,
+but its rhetorical placement must remain.
+
+Example — reason remains inside the action because it reveals Marcus's priorities:
+> 僕はバッグをつかみ、ノートパソコンを四分の三だけ閉じた――ダウンロードを飛ばしたくなかった――そして、避けようのない事態に備えた。
+
+See also `TRANSLATION_GUIDE.md` § Surface syntax versus rhetorical information timing.
+
+**List → judgment timing:** When Marcus describes two or more traits and then dismisses their
+effectiveness or draws a conclusion, preserve the concluding judgment after the list. The final
+sentence sounds like Marcus's evaluation, not an academic summary. Rebuild the Japanese freely,
+but retain the list → judgment sequence.
+
+Example — dismissal follows the trait list:
+> いつも今にもダンクシュートをかましてきそうな威圧感があり、芝居がかった効果を狙って声を張り上げるのも好きだった。まあ、どっちも何度もやられれば効かなくなる。
+
 **Known handles:** M1k3y (online identity as leader of Xnet), w1n5t0n (his ParanoidLinux login and school-hacking handle)
 
 ---
