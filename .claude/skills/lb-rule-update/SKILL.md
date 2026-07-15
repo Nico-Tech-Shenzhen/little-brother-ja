@@ -23,27 +23,8 @@ Cross-reference with a single line when needed.
 
 ## Feedback classification
 
-Before editing rules, decompose user feedback into atomic decisions.
-Classify each atomic decision as one or more of:
-
-| Code | Meaning |
-|---|---|
-| `exact_text_fix` | A correction to a specific translated string — not automatically a project-wide rule |
-| `general_prose_rule` | A reusable principle about Japanese construction, syntax, or register |
-| `character_voice_rule` | A rule specific to one character's dialogue or narration voice |
-| `glossary_mapping` | A stable source term → ja_term pair |
-| `context_dependent_term` | A term whose rendering varies by scene or authority type |
-| `formatting_rule` | A structural or formatting convention |
-| `no_reusable_rule` | A one-off correction; no generalisation warranted |
-
 An exact correction is **not** automatically a project-wide rule.
 Only generalise when the principle will plausibly recur in future chapters.
-
-Report for each atomic decision:
-- source feedback, classification, canonical target file
-- whether an existing rule was found
-- action taken: merged / strengthened / replaced / newly added
-- translated files potentially affected (flag only; never edit)
 
 ---
 
@@ -85,8 +66,10 @@ Resolution rules:
 ### Step 1 — Read current state
 Read `TRANSLATION_GUIDE.md`, `CHARACTERS.md`, and `glossary.tsv` in full.
 
-### Step 2 — Classify and plan
-Decompose feedback into atomic decisions. Classify each. Check for existing entries.
+### Step 2 — Plan changes
+For each item of feedback: check whether an existing rule or entry already covers it.
+- Merge or strengthen the existing entry when possible; do not duplicate.
+- Distinguish reusable rules (generalise) from one-off corrections (local fix only).
 
 ### Step 3 — Apply changes (rule files only)
 
@@ -96,34 +79,18 @@ Decompose feedback into atomic decisions. Classify each. Check for existing entr
 
 **Do not edit `docs/ja/*.md` or any other file.**
 
-### Step 4 — Retroactive-impact report
-
-After changing rules, search translated pages and report:
-- files that probably violate a changed rule
-- matching excerpts or search terms
-- severity: `required` / `recommended` / `informational`
-- whether a separate translation-fix task is needed
-
-**Confirm explicitly:**
-```
-No docs/ja/*.md files were edited by this rule update.
-```
-
-### Step 5 — Run validation
+### Step 4 — Run validation
 ```bash
 python3 scripts/validate_links.py
 python3 scripts/audit_translation_rules.py
 ```
 Include full output.
 
-### Step 6 — Report (English only)
-
-For each atomic decision: source feedback, classification, canonical file, action taken.
+### Step 5 — Report (English only)
 
 Summary:
 - Files changed; rules merged/replaced/added; glossary rows added/modified/deleted
 - Contradictions found and resolved; unresolved conflicts flagged as `needs_human_decision`
-- Retroactive-impact report
 - Confirmation: `No docs/ja/*.md files were edited`
 - `git diff -- TRANSLATION_GUIDE.md CHARACTERS.md glossary.tsv`
 - PowerShell commit:

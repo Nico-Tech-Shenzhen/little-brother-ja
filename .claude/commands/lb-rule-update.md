@@ -13,14 +13,11 @@ and/or glossary entries in `glossary.tsv`.
    - Style / prose / voice / process rules → `TRANSLATION_GUIDE.md`
    - Character voice, pronoun, name conventions → `CHARACTERS.md`
    - Term + usage context → both files; do not duplicate the explanation
-4. Classify feedback into atomic decisions before editing.
-5. Check for existing entries first. Merge or strengthen; do not duplicate.
-6. After changing rules, report retroactive impact on existing translated files
-   (flag only; do not edit `docs/ja/*.md`).
-7. **Never** edit `docs/ja/*.md` or any translated section file.
-8. **Never** retranslate.
-9. Run `python3 scripts/validate_links.py` and `python3 scripts/audit_translation_rules.py`;
+4. Check for existing entries first. Merge or strengthen; do not duplicate.
+5. **Never** edit `docs/ja/*.md` or any translated section file.
+6. **Never** retranslate.
+7. Run `python3 scripts/validate_links.py` and `python3 scripts/audit_translation_rules.py`;
    include full output.
-10. Show `git diff -- TRANSLATION_GUIDE.md CHARACTERS.md glossary.tsv`.
-11. Report in **English**: atomic-decision table, what changed, placement rationale,
-    confirmation that no section files were edited, validation result, PowerShell commit command.
+8. Show `git diff -- TRANSLATION_GUIDE.md CHARACTERS.md glossary.tsv`.
+9. Report in **English**: what changed, placement rationale,
+   confirmation that no section files were edited, validation result, PowerShell commit command.

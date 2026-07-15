@@ -13,5 +13,5 @@ and `glossary.tsv`.
 4. Default scope is `all` when no argument is given.
 5. Run `python3 scripts/audit_translation_rules.py` and include full output.
 6. Report in **English**: contradictions found and resolved, rules merged/replaced/removed,
-   glossary entries modified, retroactive-impact report, explicit confirmation that no
-   translated files were edited, PowerShell commit command.
+   glossary entries modified, explicit confirmation that no translated files were edited,
+   PowerShell commit command.

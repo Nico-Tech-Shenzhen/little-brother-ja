@@ -120,27 +120,14 @@ For each issue found, determine: resolve / flag / no-action.
 
 **Do not edit `docs/ja/*.md` under any circumstances.**
 
-### Step 5 — Retroactive-impact report
-
-After changing rules, search translated pages and report:
-- files that probably violate a changed rule
-- matching excerpts or search terms
-- severity: `required` / `recommended` / `informational`
-- whether a separate translation-fix task is needed
-
-**Confirm explicitly:**
-```
-No docs/ja/*.md files were edited during this audit.
-```
-
-### Step 6 — Run validation
+### Step 5 — Run validation
 ```bash
 python3 scripts/validate_links.py
 python3 scripts/audit_translation_rules.py
 ```
 Include full output.
 
-### Step 7 — Report (English only)
+### Step 6 — Report (English only)
 
 Include:
 - Structural audit script output (full)
@@ -149,7 +136,6 @@ Include:
 - Glossary rows modified or removed
 - Contradictions resolved (explain how)
 - Unresolved conflicts: `needs_human_decision`
-- Retroactive-impact report
 - Explicit confirmation: `No docs/ja/*.md files were edited`
 - `git diff -- TRANSLATION_GUIDE.md CHARACTERS.md glossary.tsv`
 - PowerShell commit:

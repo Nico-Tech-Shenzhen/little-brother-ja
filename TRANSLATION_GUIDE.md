@@ -253,6 +253,16 @@ Good example (Ch. 1 pilot — two reasons/standards, not two types of person):
 - Split overloaded descriptions when Japanese rhythm improves from doing so.
 - `painfully obvious` is context-dependent: confirm whether the source is about vision, cognition, or social awareness before choosing a rendering.
 
+## Translate states and textures as sensory language
+
+Do not translate an English state adjective as a completed physical action merely because the same word can also function as a verb.
+
+For food texture, smell, fluidity, and physical condition, choose natural Japanese sensory language:
+- `very runny cheese` does not mean 「非常に流れ出したチーズ」
+- Prefer 「とろとろのチーズ」 or 「ゆるく溶けたチーズ」 depending on context
+
+Preserve grotesque or low-register comparisons that are part of Marcus's voice. Do not sanitize expressions such as `very runny dog-droppings`.
+
 ## Avoid redundant synonym glosses
 
 - Do not write 「ハンドル（ハンドルネーム）」 — choose one established Japanese term.
@@ -331,6 +341,30 @@ Use visible note block only when the reader genuinely needs context:
 
 Do not add translator notes for technology, culture, or vocabulary that a Japanese
 reader familiar with tech and internet culture would already know.
+
+## Technology and cultural explanation policy
+
+Do not automatically add translator explanations for every real technology or cultural concept.
+
+- If the narrator immediately explains it, do not explain it in advance.
+- If the concept is essential and the source does not explain it, add a short natural clarification on first mention.
+- If it is not necessary to follow the scene, leave it unexplained.
+- Do not duplicate Marcus's technical explanation.
+- Do not turn his explanation into textbook prose.
+- Preserve the voice of a knowledgeable teenager explaining something he enjoys.
+
+**Tor** — use `Tor`, not `TOR` (unless reproducing source typography for a specific reason).  
+Do not prepend 「匿名通信技術である」 or similar when Marcus immediately explains the mechanism.  
+Translate relays, encryption, source, and destination clearly; do not extend the onion metaphor beyond what the source supports.
+
+## First mention of culturally specific activities
+
+For concepts such as `scavenger hunt` that Japanese readers may not readily recognize:
+- On first mention, retain the established term and add a short functional explanation.
+- After first mention, use the term alone without re-explanation.
+- Do not reduce to a generic equivalent that loses essential meaning (e.g., do not use 「宝探し」 for `scavenger hunt` — it loses the task-list, location, clue, and challenge structure).
+
+See `glossary.tsv` for the preferred rendering of `scavenger hunt`.
 
 ## Chapter-dedication voice — distinct from Marcus
 
