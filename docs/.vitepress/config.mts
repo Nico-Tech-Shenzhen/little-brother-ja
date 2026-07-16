@@ -30,6 +30,7 @@ export default defineConfig({
       {
         text: '前書き',
         items: [
+          { text: '表紙・ライセンス表記', link: '/ja/front-matter' },
           { text: '著者まえがき', link: '/ja/introduction' },
         ],
       },

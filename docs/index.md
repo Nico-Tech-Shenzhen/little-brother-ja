@@ -34,6 +34,7 @@ features:
 
 ### 前書き
 
+- [表紙・ライセンス表記](/ja/front-matter)
 - [著者まえがき](/ja/introduction)
 
 ### 本文（翻訳作業中）
