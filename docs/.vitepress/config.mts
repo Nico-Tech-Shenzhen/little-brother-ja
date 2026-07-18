@@ -9,8 +9,13 @@ export default defineConfig({
   base: '/little-brother-ja/',
 
   head: [
-    ['meta', { name: 'robots', content: 'noindex' }],
     ['meta', { name: 'author', content: 'Cory Doctorow (原著); 翻訳: 高須正和 / TAKASU Masakazu' }],
+    ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-E0N88X4QBG' }],
+    [
+      'script',
+      {},
+      "window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-E0N88X4QBG');",
+    ],
   ],
 
   themeConfig: {
