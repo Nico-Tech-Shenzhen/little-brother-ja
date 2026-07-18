@@ -151,7 +151,9 @@ def split_source(source_path: pathlib.Path):
         sys.exit(1)
 
     try:
-        raw_text = source_path.read_text(encoding="utf-8")
+        # Read as bytes then decode so no platform newline conversion occurs.
+        # write_bytes() below also bypasses Windows \n→\r\n translation.
+        raw_text = source_path.read_bytes().decode("utf-8")
     except UnicodeDecodeError as e:
         print(f"ERROR: Source file is not valid UTF-8: {e}", file=sys.stderr)
         sys.exit(1)
@@ -190,8 +192,10 @@ def write_sections(buckets: dict):
     results = []
     for fname, content in buckets.items():
         out = SECTIONS_DIR / fname
-        out.write_text(content, encoding="utf-8")
-        results.append((fname, len(content.splitlines()), len(content.encode("utf-8"))))
+        encoded = content.encode("utf-8")
+        # write_bytes avoids platform newline conversion (LF→CRLF on Windows).
+        out.write_bytes(encoded)
+        results.append((fname, len(content.splitlines()), len(encoded)))
     return results
 
 

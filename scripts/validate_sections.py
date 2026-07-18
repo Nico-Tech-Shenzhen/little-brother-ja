@@ -211,19 +211,50 @@ def check_conservation():
         return
 
     source_bytes = SOURCE_TXT.read_bytes()
-    combined = b"".join(
-        (SECTIONS_DIR / fn).read_bytes()
-        for fn in EXPECTED_SECTIONS
-        if (SECTIONS_DIR / fn).exists()
-    )
+    source_sha = hashlib.sha256(source_bytes).hexdigest()
+
+    section_parts = []
+    for fn in EXPECTED_SECTIONS:
+        p = SECTIONS_DIR / fn
+        if p.exists():
+            section_parts.append(p.read_bytes())
+        else:
+            section_parts.append(b"")  # missing section already flagged
+
+    combined = b"".join(section_parts)
+    combined_sha = hashlib.sha256(combined).hexdigest()
+
+    src_size = len(source_bytes)
+    comb_size = len(combined)
 
     if source_bytes == combined:
-        print(f"  Content conservation: OK ({len(source_bytes):,} bytes, byte-perfect)")
+        # Checks implied by byte equality: same count, same SHA-256,
+        # no omitted/duplicated/inserted bytes, no newline conversion.
+        print(f"  Content conservation: OK")
+        print(f"    bytes  : {src_size:,}")
+        print(f"    SHA-256: {source_sha}")
     else:
-        errors.append(
-            f"CONTENT LOSS: source is {len(source_bytes):,} bytes but sections total "
-            f"{len(combined):,} bytes — re-run split_source.py"
+        # Report detailed diagnostics so the cause is immediately obvious.
+        delta = comb_size - src_size
+        crlf_in_combined = combined.count(b"\r\n")
+        crlf_in_source   = source_bytes.count(b"\r\n")
+        msg = (
+            f"CONTENT CONSERVATION FAILED\n"
+            f"    source  : {src_size:,} bytes  SHA-256={source_sha}\n"
+            f"    sections: {comb_size:,} bytes  SHA-256={combined_sha}\n"
+            f"    delta   : {delta:+,} bytes\n"
+            f"    CRLF in source  : {crlf_in_source}\n"
+            f"    CRLF in sections: {crlf_in_combined}"
         )
+        if crlf_in_combined > 0 and crlf_in_source == 0 and crlf_in_combined == delta:
+            msg += (
+                f"\n    DIAGNOSIS: LF→CRLF conversion during section writing "
+                f"({crlf_in_combined} occurrences). "
+                f"Re-run split_source.py (fixed to use write_bytes)."
+            )
+        else:
+            msg += "\n    Re-run split_source.py to regenerate sections."
+        errors.append(msg)
 
 
 # ── Check 7: UTF-8 encoding valid for all sections ───────────────────────────
